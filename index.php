@@ -9,19 +9,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $query = "INSERT INTO pengaduan (nama, laporan) VALUES ('$nama', '$laporan')";
 
     if (mysqli_query($conn, $query)) {
-        echo "<div style='color: green;'><b>Sukses!</b>Laporan dari<b>$nama</b>telah diterima: <i>$laporan</i></div><hr>";
+        echo "<div style='color: green;'><b> Sukses! </b> Laporan dari <b>$nama</b> telah diterima: <i> $laporan </i></div><hr>";
     } else {
         echo "Error: " . $query . "<br>" . mysqli_error($conn);
     }
     // simpan data ke database atau lakukan proses lainnya
     // ...
 
-    // tampilkan pesan sukses
-    echo "<div style='color: green;'><b>Sukses!</b>Laporan dari<b>$nama</b>telah diterima: <i>$laporan</i></div><hr>";
 }
-// PROSES AMBIL DATA DARI DATABASE
-$ambil_data = mysqli_query($conn, "SELECT * FROM pengaduan ORDER BY id DESC");
-
+// proses ambil data dari database
+$ambil_data =mysqli_query($conn, "SELECT * FROM pengaduan ORDER BY id DESC");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -30,14 +27,16 @@ $ambil_data = mysqli_query($conn, "SELECT * FROM pengaduan ORDER BY id DESC");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistem Pengaduan -Helpdesk</title>
     <style>
-        table { width: 100%; border-collapse: collapse; margin-top: 20px;}
-        th, td { border: 1px solid #ddd; padding: 10px; text-align: left;}
-        th { background-color: #f2f2f2; }
+        table {
+    border-collapse: collapse; /* Pastikan pakai border-collapse */
+    width: 100%;               /* Gunakan titik koma di akhir setiap baris */
+}
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
     </style>
 </head>
 <body>
-    <h1>Kirim Lapotan Pengaduan</h1>
-    <form>
+    <h1>Kirim Laporan Pengaduan</h1>
+    <form method="POST" action="">
         <label>Nama anda</label><br>
         <input type="text" name="nama" placeholder="Masukan nama... "><br><br>
 
@@ -45,22 +44,28 @@ $ambil_data = mysqli_query($conn, "SELECT * FROM pengaduan ORDER BY id DESC");
         <textarea name="laporan" placeholder="Tulis kendala Anda di sini..."></textarea><br><br>
 
         <button type="submit">Kirim Sekarang</button>
-
     </form>
     <hr>
     <h2>Daftar Laporan Masuk</h2>
     <table>
-        <tr>
+        <>
             <th>No</th>
             <th>Nama Pelapor</th>
-            <th>Isi Laporan</th>
-        </tr>
-        <?php while($data = mysqli_fetch_assoc($ambil_data)) { 
-            ?>
+            <th>Laporan</th>
+            <th>Aksi</th></tr>
+        <?php 
+        $no = 1; 
+        while($row = mysqli_fetch_array($ambil_data)){
+        ?>
         <tr>
             <td><?php echo $no++; ?></td>
-            <td><?php echo $data['nama']; ?></td>
-            <td><?php echo $data['laporan']; ?></td>
+            <td><?php echo $row['nama']; ?></td>
+            <td><?php echo $row['laporan']; ?></td>
+            <td>
+                <a href="hapus.php?id=<?php echo $row['id']; ?>" 
+                onclick="return confirm('Apakah Anda yakin ingin menghapus laporan ini?')
+                ">Hapus</a>
+            </td>
         </tr>
         <?php } ?>
     </table>

@@ -48,7 +48,6 @@ $ambil_data =mysqli_query($conn, "SELECT * FROM pengaduan ORDER BY id DESC");
     <hr>
     <h2>Daftar Laporan Masuk</h2>
     <table>
-        <>
             <th>No</th>
             <th>Nama Pelapor</th>
             <th>Laporan</th>

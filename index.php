@@ -61,6 +61,7 @@ $ambil_data =mysqli_query($conn, "SELECT * FROM pengaduan ORDER BY id DESC");
             <td><?php echo $row['nama']; ?></td>
             <td><?php echo $row['laporan']; ?></td>
             <td>
+                <a href="edit.php?id=<?php echo $row['id']; ?>">Edit</a> |
                 <a href="hapus.php?id=<?php echo $row['id']; ?>" 
                 onclick="return confirm('Apakah Anda yakin ingin menghapus laporan ini?')
                 ">Hapus</a>
